@@ -49,7 +49,7 @@ function getLoaderRecursively(rules: Ul<RuleSetRule>, matcher: LoaderMatcher) {
             loader = getLoaderRecursively(rule.use as RuleSetRule[], matcher);
           }
         } else if (rule.oneOf) {
-          loader = getLoaderRecursively(rule.oneOf, matcher);
+          loader = getLoaderRecursively(rule.oneOf as Ul<RuleSetRule>, matcher);
         } else if (isArray(rule.loader)) {
           loader = getLoaderRecursively(rule.loader, matcher);
         }
@@ -97,7 +97,7 @@ function getLoadersRecursively(
             );
           }
         } else if (rule.oneOf) {
-          getLoadersRecursively(rule.oneOf, matcher, matchingLoaders);
+          getLoadersRecursively(rule.oneOf as Ul<RuleSetRule>, matcher, matchingLoaders);
         } else if (isArray(rule.loader)) {
           getLoadersRecursively(rule.loader, matcher, matchingLoaders);
         }
@@ -160,7 +160,7 @@ function removeLoadersRecursively(
             (rule.use as Ul<RuleSetRule>) = result.rules;
           }
         } else if (rule.oneOf) {
-          const result = removeLoadersRecursively(rule.oneOf, matcher);
+          const result = removeLoadersRecursively(rule.oneOf as Ul<RuleSetRule>, matcher);
 
           removedCount += result.removedCount;
           (rule.oneOf as Ul<RuleSetRule>) = result.rules;

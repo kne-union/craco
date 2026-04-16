@@ -11,7 +11,8 @@ function setEnvironmentVariable(envProperty: string, value: any) {
 }
 
 export function setEnvironmentVariables(devServerConfig: DevServerConfig) {
-  const { open, https, host, port } = devServerConfig;
+  const { open, host, port } = devServerConfig;
+  const https = (devServerConfig as Record<string, unknown>).https;
 
   if (open === false) {
     setEnvironmentVariable('BROWSER', 'none');
