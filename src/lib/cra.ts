@@ -14,6 +14,24 @@ import { projectRoot } from './paths';
 let envLoaded = false;
 const CRA_LATEST_SUPPORTED_MAJOR_VERSION = '5.0.0';
 
+const REACT_SCRIPTS_ALTERNATIVES = ['@kne/react-scripts'];
+
+function resolveReactScriptsPackage(cracoConfig: CracoConfig): string {
+  const specified = cracoConfig.reactScriptsVersion;
+  if (specified) {
+    return specified;
+  }
+  for (const pkg of REACT_SCRIPTS_ALTERNATIVES) {
+    try {
+      require.resolve(path.join(pkg, 'package.json'), { paths: [projectRoot] });
+      return pkg;
+    } catch {
+      // try next alternative
+    }
+  }
+  return REACT_SCRIPTS_ALTERNATIVES[0];
+}
+
 /************  Common  ************/
 
 function resolveConfigFilePath(cracoConfig: CracoConfig, fileName: string) {
@@ -33,7 +51,7 @@ function resolveConfigFilePathInner(
 ) {
   return require.resolve(
     path.join(
-      cracoConfig.reactScriptsVersion ?? 'react-scripts',
+      resolveReactScriptsPackage(cracoConfig),
       'config',
       fileName
     ),
@@ -44,7 +62,7 @@ function resolveConfigFilePathInner(
 function resolveScriptsFilePath(cracoConfig: CracoConfig, fileName: string) {
   return require.resolve(
     path.join(
-      cracoConfig.reactScriptsVersion ?? 'react-scripts',
+      resolveReactScriptsPackage(cracoConfig),
       'scripts',
       fileName
     ),
@@ -69,7 +87,7 @@ function overrideModule(modulePath: string, newModule: any) {
 function resolvePackageJson(cracoConfig: CracoConfig) {
   return require.resolve(
     path.join(
-      cracoConfig.reactScriptsVersion ?? 'react-scripts',
+      resolveReactScriptsPackage(cracoConfig),
       'package.json'
     ),
     { paths: [projectRoot] }
