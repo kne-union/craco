@@ -8,9 +8,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc",
-    "build:lib": "tsc",
-    "prepack": "npm run build"
+    "build:lib": "tsc"
   },
   "publishConfig": {
     "access": "public"
