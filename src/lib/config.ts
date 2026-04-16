@@ -10,7 +10,7 @@ import { projectRoot } from './paths';
 import { deepMergeWithArray, isArray, isFunction, isString } from './utils';
 
 const DEFAULT_CONFIG: CracoConfig = {
-  reactScriptsVersion: 'react-scripts',
+  reactScriptsVersion: '',
   style: {
     postcss: {
       mode: 'extends',

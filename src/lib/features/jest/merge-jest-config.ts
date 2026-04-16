@@ -95,7 +95,7 @@ export function mergeJestConfig(
   const customResolve = (relativePath: string) =>
     require.resolve(
       path.join(
-        cracoConfig.reactScriptsVersion ?? 'react-scripts',
+        cracoConfig.reactScriptsVersion || '@kne/react-scripts',
         relativePath
       ),
       { paths: [projectRoot] }
